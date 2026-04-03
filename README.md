@@ -2,9 +2,9 @@
 
 ## Project Overview
 
-This project is a full-stack application that simulates an AI-powered support ticket triage system. It analyzes user-submitted support tickets using rule-based logic, categorizes them, assigns priority, detects urgency, and stores the results in a database.
+This project is a full-stack application that simulates a simple AI-powered support ticket triage system. It takes user-submitted support tickets, analyzes them using rule-based logic, classifies them into categories, assigns priority levels, detects urgency, and stores the results in a database.
 
-The goal is to automate ticket handling similar to real-world customer support systems used by companies.
+The idea behind this project is to mimic how real-world customer support systems automatically organize and prioritize incoming tickets.
 
 ---
 
@@ -12,9 +12,9 @@ The goal is to automate ticket handling similar to real-world customer support s
 
 ### Backend
 
-* REST API for ticket analysis
-* Rule-based NLP (no external AI APIs)
-* Ticket classification:
+* REST API for analyzing support tickets
+* Rule-based NLP logic (no external AI APIs used)
+* Ticket classification into:
 
   * Billing
   * Technical
@@ -27,35 +27,35 @@ The goal is to automate ticket handling similar to real-world customer support s
   * P1 (High)
   * P2 (Medium)
   * P3 (Low)
-* Urgency detection (e.g., "urgent", "asap")
-* Keyword extraction
-* Confidence score calculation
-* MongoDB database integration
+* Urgency detection based on keywords (e.g., "urgent", "asap")
+* Keyword extraction from the message
+* Confidence score calculation based on matches
+* MongoDB integration for storing tickets
 
 ---
 
 ### Frontend
 
-* Text area to submit tickets
-* Submit button to call API
-* Result panel showing:
+* Text area to submit support tickets
+* Submit button to trigger analysis
+* Result panel displaying:
 
   * Category
   * Priority
   * Urgency
   * Keywords
   * Confidence score
-* Table view of previously analyzed tickets
-* Loading and error handling states
+* Table view showing previously analyzed tickets (latest first)
+* Basic loading and error handling states
 
 ---
 
 ## Tech Stack
 
-* **Frontend:** React (Vite)
-* **Backend:** Node.js, Express
-* **Database:** MongoDB Atlas
-* **Containerization:** Docker, Docker Compose
+* Frontend: React (Vite)
+* Backend: Node.js, Express
+* Database: MongoDB Atlas
+* Containerization: Docker, Docker Compose
 
 ---
 
@@ -63,11 +63,9 @@ The goal is to automate ticket handling similar to real-world customer support s
 
 ### Analyze Ticket
 
-```http
 POST /tickets/analyze
-```
 
-**Request Body:**
+Request:
 
 ```json
 {
@@ -75,7 +73,7 @@ POST /tickets/analyze
 }
 ```
 
-**Response:**
+Response:
 
 ```json
 {
@@ -91,62 +89,56 @@ POST /tickets/analyze
 
 ### Get All Tickets
 
-```http
 GET /tickets
-```
 
-Returns list of previously analyzed tickets (latest first).
+Returns a list of previously analyzed tickets (latest first).
 
 ---
 
 ## AI / NLP Logic
 
-This project uses **heuristic-based logic** instead of external AI:
+This project uses simple heuristic-based logic instead of any external AI services.
 
-* Keyword matching for classification
-* Predefined urgency words detection
-* Priority scoring based on:
+* Classification is done using keyword matching
+* Urgency is detected using predefined terms
+* Priority is assigned based on category and urgency
+* Confidence score depends on how many keywords match
 
-  * Category
-  * Urgency signals
-* Confidence score based on number of matched keywords
+This approach keeps the system lightweight while still demonstrating the core idea.
 
 ---
 
-## Custom Rule (Important)
-
-### Rule:
+## Custom Rule
 
 If the ticket contains the word **"refund"**:
 
-* Category -> Billing
-* Priority -> P1 (High)
+* Category is set to Billing
+* Priority is set to P1 (High)
 
-### Rationale:
-
-Refund-related issues directly impact customer money and satisfaction, so they should be handled with higher priority.
+**Reason:**
+Refund-related issues directly affect user money and usually require quicker handling, so they are treated with higher priority.
 
 ---
 
 ## How to Run (Docker)
 
-### Step 1: Clone Repository
+Step 1: Clone the repository
 
 ```bash
 git clone https://github.com/your-username/ai-ticket-triage.git
 cd ai-ticket-triage
 ```
 
-### Step 2: Run Project
+Step 2: Start the application
 
 ```bash
 docker-compose up
 ```
 
-### Step 3: Access
+Step 3: Open in browser
 
-* Frontend -> http://localhost:3000
-* Backend -> http://localhost:5000
+* Frontend: http://localhost:3000
+* Backend: http://localhost:5000
 
 ---
 
@@ -157,7 +149,7 @@ Basic unit tests are included for:
 * Ticket classification
 * Priority logic
 
-Run tests:
+Run tests using:
 
 ```bash
 npm test
@@ -167,66 +159,33 @@ npm test
 
 ## Project Structure
 
-```
-backend/
- ├── controllers/
- ├── services/
- ├── analyzer/
- ├── models/
- ├── routes/
+The project is organized in a simple and modular way:
 
-frontend/
- ├── src/
- ├── components/
+* backend/ contains all server-side code
 
-docker-compose.yml
-README.md
-```
+  * controllers handle requests and responses
+  * services contain business logic
+  * analyzer includes ticket analysis logic
+  * models define database schemas
+  * routes define API endpoints
+  * config stores configuration like database setup
+
+* frontend/ contains the React application
+
+  * src includes components, pages, and API calls
+
+* docker-compose.yml is used to run the full project using Docker
+
+* README.md contains project documentation
 
 ---
 
 ## Design Decisions
 
-* Used **modular architecture** (controller -> service -> analyzer)
-* Chose **MongoDB** for flexible schema and quick setup
-* Used **keyword-based NLP** for simplicity and constraint compliance
-* Docker used for consistent environment setup
-
----
-
-## Limitations
-
-* Not a real AI model (rule-based only)
-* Limited keyword coverage
-* Confidence score is basic
-* No authentication system
-
----
-
-##  Future Improvements
-
-* Use real NLP models (if allowed)
-* Add user authentication
-* Improve UI/UX
-* Add more advanced scoring logic
-* Deploy on cloud (AWS / Vercel)
-
----
-
-## Reflection
-
-This project demonstrates how real-world systems can automate support workflows using simple logic. The main focus was on correctness, modular design, and usability.
-
-Trade-offs:
-
-* Chose simplicity over complexity (rule-based instead of ML)
-* Focused more on backend logic than UI design
-
-With more time:
-
-* I would improve NLP accuracy
-* Add analytics dashboard
-* Implement real-time updates
+* Used a modular structure (controller -> service -> analyzer) to keep the code organized
+* Chose MongoDB for flexibility and ease of integration
+* Implemented keyword-based logic to stay within the "no external AI" constraint
+* Used Docker to ensure the project runs consistently across environments
 
 ---
 
@@ -238,4 +197,4 @@ https://youtu.be/sijWr2CCCko
 
 ## Final Note
 
-This project reflects a practical implementation of a ticket triage system, showcasing backend logic, frontend integration, and containerized deployment.
+This project demonstrates a practical approach to building a ticket triage system using simple logic, clean structure, and full-stack integration.
