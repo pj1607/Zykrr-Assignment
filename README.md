@@ -188,6 +188,22 @@ The project is organized in a simple and modular way:
 * Used Docker to ensure the project runs consistently across environments
 
 ---
+## Future Improvements 
+* Use real NLP models (if allowed)
+* Add user authentication
+* Improve UI/UX
+* Add more advanced scoring logic
+* Deploy on cloud (AWS / Vercel)
+---
+## Reflection 
+This project demonstrates how real-world systems can automate support workflows using simple logic. The main focus was on correctness, modular design, and usability. Trade-offs: 
+* Chose simplicity over complexity (rule-based instead of ML)
+* Focused more on backend logic than UI design With more time:
+* I would improve NLP accuracy
+* Add analytics dashboard
+* Implement real-time updates
+
+---
 
 ## Demo
 
